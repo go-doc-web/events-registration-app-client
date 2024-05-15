@@ -1,0 +1,19 @@
+.section-title {
+  padding: 20px 0 10px;
+}
+
+.title-page {
+  text-transform: uppercase;
+}
+
+.section-board {
+  padding: 10px 0 20px;
+  /* background-color: #ece4e4; */
+}
+
+.section-pagination {
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
