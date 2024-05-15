@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/PageTitle";
 import EventBoard from "../../components/EventsBoard";
 
@@ -6,7 +7,10 @@ import { fetchData } from "../../api/events";
 import "./HomePage.css";
 
 const HomePage = () => {
-  const [events, setEvents] = useState([]);
+  const dispatch = useDispatch();
+  const eventsSelector = useSelector((s) => s.events);
+  console.log("eventsSelector", eventsSelector);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,16 +18,16 @@ const HomePage = () => {
       try {
         setLoading(true);
         const { data } = await fetchData(1, 12);
-        console.log("datadata", data);
-        setEvents(data);
+        dispatch({ type: "SET_ALL_EVENTS", payload: data });
       } catch (error) {
         console.log(error.message);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     };
     getFeychEvents();
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -36,7 +40,8 @@ const HomePage = () => {
           <PageTitle className="title-page" text="events" />
         </section>
         <section className="section-board">
-          <EventBoard events={events} />
+          {eventsSelector.length === 0 && <p>Events not</p>}
+          {eventsSelector.length > 0 && <EventBoard events={eventsSelector} />}
         </section>
         <section className="section-pagination">
           <div>1 2 3 4 5 6</div>
