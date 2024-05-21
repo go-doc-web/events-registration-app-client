@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/PageTitle";
 import EventBoard from "../../components/EventsBoard";
 import Pagination from "../../components/Pagination/Pagination";
-import { getPosts } from "../../redux/reduxSlice/eventsSlice";
+import { getPosts } from "../../redux/operations/eventOperation";
 
 import "./HomePage.css";
 
@@ -13,7 +13,6 @@ const HomePage = () => {
     isLoading,
     error,
     events: { data, size, total },
-    events,
   } = useSelector((s) => s.event);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,8 +25,6 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getPosts({ page: currentPage, pageSize: 12 }));
   }, [dispatch, currentPage]);
-
-  console.log("events", events);
 
   if (isLoading) {
     return <p>Loading...</p>;
