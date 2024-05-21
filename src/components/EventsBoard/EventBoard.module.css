@@ -22,3 +22,21 @@
 .cardDescription {
   font-size: 14px;
 }
+
+@media screen and (max-width: 768px) {
+  .card {
+    flex-basis: calc((100% - 60px) / 3);
+  }
+}
+
+@media screen and (max-width: 497px) {
+  .card {
+    flex-basis: calc((100% - 30px) / 2);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .card {
+    flex-basis: 100%;
+  }
+}
