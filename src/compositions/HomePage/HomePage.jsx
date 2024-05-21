@@ -1,37 +1,46 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/PageTitle";
 import EventBoard from "../../components/EventsBoard";
+import Pagination from "../../components/Pagination/Pagination";
+import { getPosts } from "../../redux/reduxSlice/eventsSlice";
 
-import { fetchData } from "../../api/events";
 import "./HomePage.css";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const eventsSelector = useSelector((s) => s.events);
-  console.log("eventsSelector", eventsSelector);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const {
+    isLoading,
+    error,
+    events: { data, size, total },
+    events,
+  } = useSelector((s) => s.event);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= Math.ceil(total / size)) {
+      setCurrentPage(page);
+    }
+  };
 
   useEffect(() => {
-    const getFeychEvents = async () => {
-      try {
-        setLoading(true);
-        const { data } = await fetchData(1, 12);
-        dispatch({ type: "SET_ALL_EVENTS", payload: data });
-      } catch (error) {
-        console.log(error.message);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getFeychEvents();
-  }, [dispatch]);
+    dispatch(getPosts({ page: currentPage, pageSize: 12 }));
+  }, [dispatch, currentPage]);
 
-  if (loading) {
+  console.log("events", events);
+
+  if (isLoading) {
     return <p>Loading...</p>;
   }
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!data || data.length === 0) {
+    return <p>No events available</p>;
+  }
+
+  const totalPages = Math.ceil(total / size);
 
   return (
     <main>
@@ -40,11 +49,16 @@ const HomePage = () => {
           <PageTitle className="title-page" text="events" />
         </section>
         <section className="section-board">
-          {eventsSelector.length === 0 && <p>Events not</p>}
-          {eventsSelector.length > 0 && <EventBoard events={eventsSelector} />}
+          {data && <EventBoard events={data} />}
         </section>
         <section className="section-pagination">
-          <div>1 2 3 4 5 6</div>
+          <div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </section>
       </div>
     </main>
