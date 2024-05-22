@@ -1,0 +1,12 @@
+.participantsList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.participantsCard {
+  flex-basis: calc((100% - 45px) / 4);
+  border: 1px solid #030303;
+  padding: 20px;
+}
