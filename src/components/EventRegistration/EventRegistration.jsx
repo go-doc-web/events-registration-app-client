@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import QRCode from "qrcode.react";
 import { EventRegistrationById } from "../../redux/operations/eventOperation";
+import {
+  validateEmail,
+  validateFullName,
+} from "../../helpers/validateFormRegister";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,6 +25,7 @@ const EventRegistration = () => {
     source: "",
   });
   const [isRegistered, setIsRegistered] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,14 +53,26 @@ const EventRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const errors = {};
+    // if (!validateFullName(formData.fullName)) {
+    //   errors.fullName = "Full name is required";
+    // }
+    // if (!validateEmail(formData.email)) {
+    //   errors.email = "Invalid email address";
+    // }
+
+    // if (Object.keys(errors).length > 0) {
+    //   setErrors(errors);
+    //   console.log("errors", errors);
+    //   return;
+    // }
+
     dispatch(EventRegistrationById({ eventId, formData }));
     clearForm();
     setIsRegistered(true);
   };
   const participantsData = useSelector((state) => state.register.formData);
   const qrData = "Купон 10% на каву!!!";
-
-  console.log("qrData", qrData);
 
   if (isRegistered) {
     return (
@@ -89,6 +106,7 @@ const EventRegistration = () => {
             placeholder="Dart Vader"
             required
           />
+          {errors.fullName && <p className={css.error}>{errors.fullName}</p>}
         </div>
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
@@ -101,6 +119,7 @@ const EventRegistration = () => {
             placeholder="darth.vader@empire.com"
             required
           />
+          {errors.email && <p className={css.error}>{errors.email}</p>}
         </div>
         <div className={css.formGroup}>
           <label htmlFor="birthDate">Date Of Birth</label>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import css from "./ParticipantsPage.module.css";
@@ -11,11 +11,22 @@ import { getParticipantsByIdEvent } from "../../redux/operations/eventOperation"
 
 const ParticipantsPage = () => {
   const { eventId } = useParams();
-
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const { isLoading, error, participants } = useSelector(
     (state) => state.participant
   );
+  const filteredParticipants = participants.filter((participant) => {
+    const fullName = participant.fullName.toLowerCase();
+    return (
+      fullName.includes(searchQuery.toLowerCase()) ||
+      participant.email.includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(getParticipantsByIdEvent({ eventId }));
@@ -43,7 +54,14 @@ const ParticipantsPage = () => {
           <h1 className={css.participantsTitle}>
             <q>Awesome Event</q> participants
           </h1>
-          <ParticipantsBoard />
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={css.searchInput}
+          />
+          <ParticipantsBoard filteredParticipants={filteredParticipants} />
         </div>
       </section>
     </>
