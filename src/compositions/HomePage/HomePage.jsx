@@ -16,6 +16,8 @@ const HomePage = () => {
     events: { data, size, total },
   } = useSelector((s) => s.event);
   const [currentPage, setCurrentPage] = useState(1);
+  console.log("baseURL", import.meta.env.VITE_API_URL);
+  console.log("baseURL", import.meta.env.VITE_REACT_APP_API_URL_DEPLOY);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= Math.ceil(total / size)) {

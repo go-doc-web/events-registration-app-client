@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import EventsBoard from "../../components/EventsBoard/EventBoard";
 // import config from "../../config/apiConfig";
 
-const baseURL =
-  import.meta.env.VITE_REACT_APP_API_URL_LOCAL ||
-  import.meta.env.VITE_REACT_APP_API_URL_DEPLOY;
+const baseURL = import.meta.env.VITE_API_URL;
 
 const ScrollPaginationPage = () => {
   const [events, setEvents] = useState([]);

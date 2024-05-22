@@ -1,14 +1,12 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// import config from "../../config/apiConfig";
+import config from "../../config/apiConfig";
 
 const axiosInstanse = axios.create({
-  baseURL:
-    import.meta.env.VITE_REACT_APP_API_URL_LOCAL ||
-    import.meta.env.VITE_REACT_APP_API_URL_DEPLOY,
+  baseURL: import.meta.env.VITE_API_URL,
 
-  // timeout: config.timeout,
+  timeout: config.timeout,
   headers: {
     "Content-Type": "application/json",
   },
