@@ -6,6 +6,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import { getPosts } from "../../redux/operations/eventOperation";
 
 import "./HomePage.css";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,10 @@ const HomePage = () => {
       <div className="container">
         <section className="section-title">
           <PageTitle className="title-page" text="events" />
+          <Link to="/scroll">
+            при переходе по ссылке страница с бесконечной прокруткой(пробовать
+            на моб версии ){" "}
+          </Link>
         </section>
         <section className="section-board">
           {data && <EventBoard events={data} />}
