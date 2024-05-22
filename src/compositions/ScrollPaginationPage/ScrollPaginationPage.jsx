@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import EventsBoard from "../../components/EventsBoard/EventBoard";
+// import config from "../../config/apiConfig";
+
+const baseURL =
+  import.meta.env.VITE_REACT_APP_API_URL_LOCAL ||
+  import.meta.env.VITE_REACT_APP_API_URL_DEPLOY;
 
 const ScrollPaginationPage = () => {
   const [events, setEvents] = useState([]);
@@ -15,7 +20,7 @@ const ScrollPaginationPage = () => {
         if (fetching) {
           console.log("fetch", fetching);
           const res = await axios.get(
-            `http://localhost:5000/api/events?page=${currentPage}&pageSize=12`
+            `${baseURL}/events?page=${currentPage}&pageSize=12`
           );
 
           console.log("total", res.data.total);
