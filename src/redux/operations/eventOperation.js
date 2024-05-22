@@ -39,3 +39,15 @@ export const EventRegistrationById = createAsyncThunk(
     }
   }
 );
+
+export const getParticipantsByIdEvent = createAsyncThunk(
+  "participant/getParticipantsByIdEvent",
+  async ({ eventId }, { thunkAPI }) => {
+    try {
+      const res = await axiosInstanse.get(`/events/${eventId}/participants`);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
