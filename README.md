@@ -7,7 +7,7 @@
 [Events Registration App](https://events-registration-app-client.vercel.app/)
 
 ## Backend
-[Events Registration App Backend]([https://events-registration-app-client.vercel.app/](https://github.com/go-doc-web/events-registration-app-backend))
+[Events Registration App Backend](https://events-registration-app-client.vercel.app/](https://github.com/go-doc-web/events-registration-app-backend))
 
 
 ## Як запустити додаток
