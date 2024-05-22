@@ -6,6 +6,10 @@
 
 [Events Registration App](https://events-registration-app-client.vercel.app/)
 
+## Backend
+[Events Registration App Backend]([https://events-registration-app-client.vercel.app/](https://github.com/go-doc-web/events-registration-app-backend))
+
+
 ## Як запустити додаток
 
 1. **Встановлення залежностей**: У корені проекту виконайте команду `npm install`, щоб встановити всі необхідні залежності.
